@@ -52,8 +52,60 @@ public class Tree {
         }//end else not root
     }//end insert
 
-    public void delete(int id){
+    /**
+     * delete node with given key
+     * @param key
+     * @return
+     */
+    public boolean delete(int key){
+        Node current = root;
+        Node parent = root;
+        boolean isLeftChild = true;
 
+        while (current.iData != key){//search for node
+            parent = current;
+            if (key < current.iData){//go left
+                isLeftChild = true;
+                current = current.leftChild;
+            }else {//or go right
+                isLeftChild = false;
+                current = current.rightChild;
+            }
+            if (current == null){ //end of the line
+                return false;//didn't find it
+            }
+        }//end while
+        //if no children ,simply delete it
+        if (current.leftChild == null && current.rightChild == null){
+            if (current == root){
+                root = null;// if root ,tree is empty
+            }else if (isLeftChild){
+                parent.leftChild = null;
+            }else {
+                parent.rightChild = null;
+            }
+        }else if(current.rightChild == null){
+//            if no right child, replace with left subtree
+            if (current == root){
+                root = current.leftChild;
+            }else if (isLeftChild){
+                parent.leftChild = current.leftChild;
+                //left child of parent
+            }else {
+                parent.rightChild = current.leftChild;
+                //right child of parent
+            }
+        }else if(current.leftChild == null){
+            if (current == root){
+                root = current.rightChild;
+            }else if (isLeftChild){
+                parent.leftChild = current.rightChild;
+                //left child of parent
+            }else{
+                parent.rightChild = current.rightChild;
+                //right child of parent
+            }
+        }
     }
 
 

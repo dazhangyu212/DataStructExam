@@ -105,7 +105,50 @@ public class Tree {
                 parent.rightChild = current.rightChild;
                 //right child of parent
             }
+        }else {
+            //get successor of node to delete(current)
+            Node successor = getSuccessor(current);
+            //后继节点肯定不会有左子节点的
+            //connect parent of current to sucessor instead
+            if (current == root){
+                root = successor;
+            }else if (isLeftChild){
+                parent.leftChild = successor;
+
+            }else {
+                //吧current从它父节点的rightChild字段移除,把这个字段置为successor
+                parent.rightChild = successor;
+                //connect successor to current's left child
+                //把current的左子节点从current移除,successor的leftChild字段置为current的左子节点
+                successor.leftChild = current.leftChild;
+            }//end else two children
+            //(successor cannot have a left child)
         }
+            return true;
+    }
+
+    /**
+     * 寻找后继节点
+     * @param delNode
+     * @return
+     */
+    private Node getSuccessor(Node delNode){
+        Node successorParent = delNode;
+        Node successor = delNode;
+        Node current = delNode.rightChild;//go to right child
+        while(current != null){
+            successorParent = successor;
+            successor = current;
+            current = current.leftChild;//go to left child
+//            if successor not rightChild
+        }
+            if (successor != delNode.rightChild){
+            //把后继父节点的leftchild字段置为successor的右子节点
+                successorParent.leftChild = successor.rightChild;//make connections
+                //把successor的rightchild字段置为要删除节点的右子节点
+                successor.rightChild = delNode.rightChild;
+            }
+            return successor;
     }
 
 

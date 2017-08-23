@@ -17,6 +17,10 @@ public class Tree234 {
         }//end while
     }
 
+    /**
+     * insert a DataItem
+     * @param dValue
+     */
     public void insert(long dValue){
         Node curNode = root;
         DataItem tempItem = new DataItem(dValue);
